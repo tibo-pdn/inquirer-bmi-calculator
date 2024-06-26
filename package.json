@@ -9,6 +9,7 @@
   "author": "Tibo Pendino",
   "license": "ISC",
   "dependencies": {
-    "inquirer": "^9.2.23"
+    "inquirer": "^9.2.23",
+    "prettier": "^3.3.2"
   }
 }
