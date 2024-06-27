@@ -8,6 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Tibo Pendino",
+  "type": "module",
   "license": "ISC",
   "dependencies": {
     "inquirer": "^9.2.23",
