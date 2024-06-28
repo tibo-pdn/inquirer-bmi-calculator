@@ -3,6 +3,25 @@ import inquirer from "inquirer";
 inquirer
   .prompt([
     {
+      type: "input",
+      name: "firstname",
+      message: "What is your first name?",
+      validate: (value) => {
+        return true;
+      },
+    },
+    {
+      type: "input",
+      name: "lastname",
+      message: "What is your last name?",
+      validate: (value) => {
+        // If true, the value is valid and the prompt will succeed.
+        // If false, the value is invalid and the prompt will show again.
+        // Can add logic to check if the input is correct
+        return true;
+      },
+    },
+    {
       type: "list",
       name: "name",
       message: "What's your favorite food?",
@@ -39,11 +58,4 @@ inquirer
   .then((answers) => {
     console.log("ANSWERS:");
     console.log(answers);
-  })
-  .catch((error) => {
-    if (error.isTtyError) {
-      // Prompt couldn't be rendered in the current environment
-    } else {
-      // Something else went wrong
-    }
   });
