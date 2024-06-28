@@ -1,61 +1,73 @@
 import inquirer from "inquirer";
+import { calculateBMI, getBMICategory } from "./bmi.js";
+// TODO - Add chalk package (?)
+
+console.log("---------- Welcome to the BMI calculator! ----------");
 
 inquirer
-  .prompt([
-    {
-      type: "input",
-      name: "firstname",
-      message: "What is your first name?",
-      validate: (value) => {
-        return true;
+  .prompt(
+    [
+      {
+        type: "input",
+        name: "name",
+        message: "What is your name?",
+        default: "John Doe",
+        validate: (value) => {
+          if (!value.length) {
+            return "Please enter your name to proceed.";
+          }
+          return true;
+        },
       },
-    },
-    {
-      type: "input",
-      name: "lastname",
-      message: "What is your last name?",
-      validate: (value) => {
-        // If true, the value is valid and the prompt will succeed.
-        // If false, the value is invalid and the prompt will show again.
-        // Can add logic to check if the input is correct
-        return true;
+      {
+        type: "input",
+        name: "height",
+        message: "How tall are you? (in cm)",
+        default: "170",
+        transformer: (value) => {
+          return `${value} cm`;
+        },
+        validate: (value) => {
+          if (
+            value === "" ||
+            isNaN(value) ||
+            parseInt(value) <= 0 ||
+            parseInt(value) >= 272
+          ) {
+            return "Please enter a valid number between 0 and 272.";
+          }
+          return true;
+        },
       },
-    },
-    {
-      type: "list",
-      name: "name",
-      message: "What's your favorite food?",
-      choices: [
-        {
-          name: "choice #1",
-          value: "choice1",
-          short: "choice1-short",
+      {
+        type: "input",
+        name: "weight",
+        message: "How much do you weigh? (in kg)",
+        default: "70",
+        transformer: (value) => {
+          return `${value} kg`;
         },
-        {
-          name: "choice #2",
-          value: "choice2",
-          short: "choice2-short",
+        validate: (value) => {
+          if (
+            value === "" ||
+            isNaN(value) ||
+            parseInt(value) <= 0 ||
+            parseInt(value) >= 727
+          ) {
+            return "Please enter a valid number between 1 and 727.";
+          }
+          return true;
         },
-        {
-          name: "choice #3",
-          value: "choice3",
-          short: "choice3-short",
-        },
-        {
-          name: "choice #3",
-          value: "choice3",
-          short: "choice4-short",
-        },
-      ],
-      validate: (value) => {
-        // If true, the value is valid and the prompt will succeed.
-        // If false, the value is invalid and the prompt will show again.
-        // Can add logic to check if the input is correct
-        return true;
       },
+    ],
+    () => {
+      // This function is useless
     },
-  ])
+  )
   .then((answers) => {
-    console.log("ANSWERS:");
-    console.log(answers);
+    const bmi = calculateBMI(answers.weight, answers.height);
+    const category = getBMICategory(bmi);
+    console.log(
+      `Hello ${answers.name}! Your BMI is ${bmi} and is considered as ${category}.`,
+    );
   });
